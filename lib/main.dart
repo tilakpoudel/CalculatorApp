@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import './home.dart';
 
 main() {
+  // debugPaintSizeEnabled = true;
   runApp(GadakYentra());
 }
 
