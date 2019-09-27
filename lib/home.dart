@@ -10,6 +10,8 @@ class _HomePageState extends State<HomePage> {
   String result = '';
   var res = 'Result';
   String displayExpression = '';
+  bool isdot = true;
+  bool operatorSetDot = true;
 
   resetCalc() {
     setState(() {
@@ -17,14 +19,12 @@ class _HomePageState extends State<HomePage> {
       result = '';
       res = 'Result';
       displayExpression = '';
+      isdot = true;
+      operatorSetDot = false;
     });
   }
 
   calcualteValue(String number, String operator) {
-    // setState(() {
-
-    //   displayExpression += number;
-    // });
     if (operator == 'clear') {
       print(operator);
       resetCalc();
@@ -32,12 +32,25 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         res = solve(expression);
       });
+    } else if (operator == 'dot') {
+      print(number);
+      setState(() {
+        print(operatorSetDot);
+        if (isdot && operatorSetDot) {
+          displayExpression += number;
+          expression += number;
+          isdot = false;
+        }
+        res = solve(expression);
+      });
     } else {
-      // var list = ['*','+','-','/'];
       setState(() {
         expression += number;
         if (operator == 'null') {
+          isdot = true;
           res = solve(expression);
+        } else {
+          operatorSetDot = true;
         }
 
         displayExpression += number;
@@ -186,10 +199,10 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              button("0", 'null'),
+              button("AC", 'null'),
               button("C", 'clear'),
+              button("%", 'mod'),
               button("/", 'divide'),
-              button("*", 'multiply'),
             ],
           ),
           Row(
@@ -198,7 +211,7 @@ class _HomePageState extends State<HomePage> {
               button("7", 'null'),
               button("8", 'null'),
               button("9", 'null'),
-              button("-", 'minus'),
+              button("*", 'multiply'),
             ],
           ),
           Row(
@@ -207,7 +220,7 @@ class _HomePageState extends State<HomePage> {
               button("4", 'null'),
               button("5", 'null'),
               button("6", 'null'),
-              button("+", 'plus'),
+              button("-", 'minus'),
             ],
           ),
           Row(
@@ -216,6 +229,15 @@ class _HomePageState extends State<HomePage> {
               button("1", 'null'),
               button("2", 'null'),
               button("3", 'null'),
+              button("+", 'plus'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              button("0", 'null'),
+              button(".", 'dot'),
+              button("x^y", 'null'),
               button("=", 'equals'),
             ],
           ),
