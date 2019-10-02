@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       res = 'Result';
       displayExpression = '';
       isdot = true;
-      operatorSetDot = false;
+      operatorSetDot = true;
     });
   }
 
@@ -36,23 +36,38 @@ class _HomePageState extends State<HomePage> {
       print(number);
       setState(() {
         print(operatorSetDot);
-        if (isdot && operatorSetDot) {
-          displayExpression += number;
+        // if (isdot || operatorSetDot) {
+        //   displayExpression += number;
+        //   expression += number;
+        //   isdot = false;
+        // }
+        if (isdot) {
           expression += number;
           isdot = false;
-        }
-        res = solve(expression);
-      });
-    } else {
-      setState(() {
-        expression += number;
-        if (operator == 'null') {
-          isdot = true;
-          res = solve(expression);
-        } else {
           operatorSetDot = true;
         }
 
+        res = solve(expression);
+      });
+    } else {
+      print(operator);
+      setState(() {
+        if (operator == 'null') {
+          expression += number;
+          res = solve(expression);
+          operatorSetDot = true;
+        } else {
+          if (operatorSetDot) {
+            print('object');
+            expression += number;
+            operatorSetDot = false;
+            isdot = true;
+            operatorSetDot = true;
+            // displayExpression += number;
+          }
+          // expression += number;
+          // operatorSetDot = true;
+        }
         displayExpression += number;
       });
     }
